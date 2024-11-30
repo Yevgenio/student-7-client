@@ -52,7 +52,9 @@ export class ChatService { // service worker
     Object.keys(data).forEach(key => {
       formData.append(key, data[key]);
     });
-    return this.http.post(this.baseUrl, formData);
+    return this.http.post(this.baseUrl, formData, { 
+      headers: this.getAuthHeaders() 
+    });
   }
 
   // Update an existing chat (requires admin access)

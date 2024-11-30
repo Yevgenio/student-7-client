@@ -57,7 +57,9 @@ export class DealService { // service worker
     Object.keys(deal).forEach(key => {
       formData.append(key, deal[key]);
     });
-    return this.http.post(this.baseUrl, formData);
+    return this.http.post(this.baseUrl, formData, { 
+      headers: this.getAuthHeaders() 
+    });
   }
   
 
