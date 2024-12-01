@@ -23,9 +23,9 @@ export class DealFormComponent implements OnInit {
     this.dealForm = this.fb.group({
       name: ['', Validators.required],
       description: [''],
-      price: [null],
+      price: [''],
       category: [''],
-      stock: [null],
+      stock: [''],
       startsAt: [''],
       endsAt: [''],
       imagePath: [''],
