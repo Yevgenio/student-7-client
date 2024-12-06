@@ -1,6 +1,7 @@
 export const CONFIG = {
-    // apiBaseUrl: 'http://127.0.0.1',
-    apiBaseUrl: 'http://51.84.9.120',
+    // apiBaseUrl: 'http://127.0.0.1', //localhost
+    // apiBaseUrl: 'http://51.84.9.120', // my server
+    apiBaseUrl: 'http://51.16.37.75', // student 7 aws
     defaultLanguage: 'he',
     otherGlobalVariable: 'value',
   };
