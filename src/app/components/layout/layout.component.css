@@ -14,6 +14,10 @@
   flex-wrap: wrap;
 }
 
+.header a { 
+  text-decoration: none;
+}
+
 .header .title-container {
   display: flex;
   align-items: center;
