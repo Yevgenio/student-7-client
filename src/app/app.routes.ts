@@ -46,6 +46,7 @@ export const routes: Routes = [
       { path: 'chats', component: ChatListComponent },
       { path: 'chats/id/:id', component: ChatDetailsComponent },
       { path: 'chats/add', component: ChatFormComponent, canActivate: [AdminGuard] },
+      { path: 'chats/edit/:id', component: ChatFormComponent }, // Edit existing chat
 
       { path: 'signup', component: UserSignupComponent },
       { path: 'login', component: UserLoginComponent },
