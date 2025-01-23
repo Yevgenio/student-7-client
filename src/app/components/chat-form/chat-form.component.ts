@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule  } from '@angular/forms';
 // import { CommonModule } from '@angular/common';
 import { ChatService } from '../../services/chat.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-chat-form',
@@ -16,7 +17,8 @@ export class ChatFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private chatService: ChatService
+    private chatService: ChatService,
+    private route: ActivatedRoute // Add this
   ) {}
 
   ngOnInit(): void {
@@ -41,6 +43,12 @@ export class ChatFormComponent implements OnInit {
 
 
   onSubmit(): void {
+    const chatId = this.route.snapshot.paramMap.get('id');
+  if (chatId) {
+    this.chatService.getChatById(chatId).subscribe(chat => {
+      this.chatForm.patchValue(chat);
+    });
+  }
     if (this.chatForm.valid) {
       // Submit the form data to the chat service
       const newChat = this.chatForm.value;

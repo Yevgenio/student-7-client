@@ -59,14 +59,14 @@ export class ChatService { // service worker
 
   // Update an existing chat (requires admin access)
   updateChat(chat: Chat): Observable<Chat> {
-    return this.http.put<Chat>(`${this.baseUrl}/${chat._id}`, chat, { 
+    return this.http.put<Chat>(`${this.baseUrl}/id/${chat._id}`, chat, { 
       headers: this.getAuthHeaders() 
     });
   }
 
   // Delete a chat by its ID (requires admin access)
   deleteChat(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`, {
+    return this.http.delete<void>(`${this.baseUrl}/id/${id}`, {
        headers: this.getAuthHeaders() 
       });
   }
