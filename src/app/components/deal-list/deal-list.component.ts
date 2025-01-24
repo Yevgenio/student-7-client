@@ -40,7 +40,6 @@ export class DealListComponent implements OnInit {
     if (confirm('Are you sure you want to delete this deal?')) {
       this.dealService.deleteDeal(deal._id).subscribe(() => {
         this.deals = this.deals.filter(d => d._id !== deal._id);
-        alert('Deal deleted successfully.');
       });
     }
   }

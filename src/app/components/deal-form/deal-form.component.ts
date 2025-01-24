@@ -31,7 +31,7 @@ export class DealFormComponent implements OnInit {
       name: ['', Validators.required],
       description: [''],
       category: [''],
-      stock: [null],
+      stock: -1,
       startsAt: [''],
       endsAt: [''],
       imagePath: [''],
@@ -72,36 +72,24 @@ export class DealFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.dealForm.valid) {
-      const formData = new FormData();
+      // Prepare the payload
+      const dealData = { ...this.dealForm.value };
   
-      // Append form fields
-      Object.keys(this.dealForm.value).forEach(key => {
-        formData.append(key, this.dealForm.value[key]);
+      // Convert empty strings to null
+      Object.keys(dealData).forEach((key) => {
+        if (dealData[key] === '') {
+          dealData[key] = null;
+        }
       });
-  
-      // Use existing image and barcode paths if new files are not uploaded
-      if (!this.selectedFiles['imagePath']) {
-        formData.append('imagePath', this.existingImagePath || '');
-      }
-      if (!this.selectedFiles['barcodePath']) {
-        formData.append('barcodePath', this.existingBarcodePath || '');
-      }
-  
-      // Append new files, if any
-      Object.keys(this.selectedFiles).forEach(key => {
-        formData.append(key, this.selectedFiles[key]);
-      });
-  
       if (this.isEditMode) {
-        // Update the deal
-        this.dealService.updateDeal(this.dealId!, formData).subscribe({
-          next: () => {
-            alert('Deal updated successfully!');
-            this.router.navigate(['/deals']);
-          },
-          error: err => {
-            console.error('Error updating deal:', err);
-          },
+        // Update the existing deal
+        this.dealService.updateDeal(this.dealId!, this.dealForm.value).subscribe(() => {
+          this.router.navigate(['/deals']);
+        });
+      } else {
+        // Create a new deal
+        this.dealService.createDeal(this.dealForm.value).subscribe(() => {
+          this.router.navigate(['/deals']);
         });
       }
     }

@@ -16,6 +16,7 @@ export class ChatFormComponent implements OnInit {
   selectedFiles: { [key: string]: File } = {};
   isEditMode = false; // To track whether we're editing or creating a chat
   chatId: string | null = null; // To store the ID of the chat being edited
+  existingImagePath: string | undefined;
 
   constructor(
     private fb: FormBuilder,

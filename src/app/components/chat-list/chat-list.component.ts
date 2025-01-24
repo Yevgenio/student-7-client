@@ -23,7 +23,6 @@ export class ChatListComponent implements OnInit {
       this.chats.forEach(chat => {
         chat.name = chat.name.substring(0, 30);
         chat.description = chat.description.substring(0, 30);
-        console.log('chat.imagePath:', chat.imagePath);
       });
     });
   }
