@@ -42,6 +42,7 @@ export const routes: Routes = [
       { path: 'deals', component: DealListComponent },
       { path: 'deals/id/:id', component: DealDetailsComponent },
       { path: 'deals/add', component: DealFormComponent, canActivate: [AdminGuard] },
+      { path: 'deals/edit/:id', component: DealFormComponent }, // Edit existing deal
 
       { path: 'chats', component: ChatListComponent },
       { path: 'chats/id/:id', component: ChatDetailsComponent },

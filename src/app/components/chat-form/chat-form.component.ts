@@ -46,21 +46,6 @@ export class ChatFormComponent implements OnInit {
     }
   }
 
-  // loadChatDetails(): void {
-  //   this.chatService.getChatById(this.chatId!).subscribe(chat => {
-  //     // Patch form values with chat data
-  //     this.chatForm.patchValue({
-  //       name: chat.name,
-  //       description: chat.description,
-  //       link: chat.link,
-  //       category: chat.category,
-  //       startsAt: chat.startsAt,
-  //       endsAt: chat.endsAt,
-  //       imagePath: '', // Don't populate file input
-  //     });
-  //   });
-  // }
-
   onFileSelect(event: Event, field: string): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
@@ -74,7 +59,6 @@ export class ChatFormComponent implements OnInit {
       if (this.isEditMode) {
         // Update the existing chat
         this.chatService.updateChat(this.chatId!, this.chatForm.value).subscribe(() => {
-          console.log(this.chatForm.value);
           this.router.navigate(['/chats']);
         });
       } else {

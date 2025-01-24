@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule  } from '@angular/forms';
 // import { CommonModule } from '@angular/common';
 import { DealService } from '../../services/deal.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-chat-form',
+  selector: 'app-deal-form',
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './deal-form.component.html',
@@ -13,10 +14,14 @@ import { DealService } from '../../services/deal.service';
 export class DealFormComponent implements OnInit {
   dealForm!: FormGroup;
   selectedFiles: { [key: string]: File } = {};
+  isEditMode = false; // To track whether we're editing or creating a deal
+  dealId: string | null = null; // To store the ID of the deal being edited
 
   constructor(
     private fb: FormBuilder,
-    private dealService: DealService
+    private dealService: DealService,
+    private route: ActivatedRoute, // To fetch route parameters
+    private router: Router // To navigate after submission
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +36,16 @@ export class DealFormComponent implements OnInit {
       imagePath: [''],
       barcodePath: [''],
     });
+
+    // Check if we're in edit mode (i.e., if a deal ID is in the route)
+    this.dealId = this.route.snapshot.paramMap.get('id');
+    if (this.dealId) {
+      this.isEditMode = true;
+      // Fetch the deal details and populate the form
+      this.dealService.getDealById(this.dealId).subscribe(deal => {
+        this.dealForm.patchValue(deal);
+      });
+    }
   }
 
   onFileSelect(event: Event, field: string): void {
@@ -44,19 +59,17 @@ export class DealFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.dealForm.valid) {
-      // Submit the form data to the deal service
-      const newDeal = this.dealForm.value;
-      console.log(newDeal);
-      // Call service to add the deal
-      this.dealService.addDeal(newDeal).subscribe({
-        next: () => {
-          alert('Deal added successfully!');
-          this.dealForm.reset();
-        },
-        error: (err) => {
-          console.error('Error adding deal', err);
-        }
-      });
+      if (this.isEditMode) {
+        // Update the existing deal
+        this.dealService.updateDeal(this.dealId!, this.dealForm.value).subscribe(() => {
+          this.router.navigate(['/deals']);
+        });
+      } else {
+        // Create a new deal
+        this.dealService.createDeal(this.dealForm.value).subscribe(() => {
+          this.router.navigate(['/deals']);
+        });
+      }
     }
   }
 }

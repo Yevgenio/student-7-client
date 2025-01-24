@@ -27,9 +27,7 @@ export class ChatService { // service worker
       map((data) =>
         data.map((data) => {
           if (data.imagePath) {
-            console.log('before- data.imagePath:', data.imagePath);
             data.imagePath = `${this.uploadUrl}/${data.imagePath}`;
-            console.log('after-data.imagePath:', data.imagePath);
           }
           return data;
         })

@@ -52,27 +52,31 @@ export class DealService { // service worker
     );
   }
 
-  addDeal(deal: any): Observable<any> {
+  // Add a new deal (requires admin access)
+  createDeal(data: any): Observable<any> {
     const formData = new FormData();
-    Object.keys(deal).forEach(key => {
-      formData.append(key, deal[key]);
+    Object.keys(data).forEach(key => {
+      formData.append(key, data[key]);
     });
     return this.http.post(this.baseUrl, formData, { 
       headers: this.getAuthHeaders() 
     });
   }
-  
 
   // Update an existing deal (requires admin access)
-  updateDeal(deal: Deal): Observable<Deal> {
-    return this.http.put<Deal>(`${this.baseUrl}/${deal._id}`, deal, { 
+  updateDeal(id: string, data: any): Observable<Deal> {
+    const formData = new FormData();
+    Object.keys(data).forEach(key => {
+      formData.append(key, data[key]);
+    });
+    return this.http.put<Deal>(`${this.baseUrl}/id/${id}`, formData, { 
       headers: this.getAuthHeaders() 
     });
   }
 
   // Delete a deal by its ID (requires admin access)
   deleteDeal(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`, {
+    return this.http.delete<void>(`${this.baseUrl}/id/${id}`, {
        headers: this.getAuthHeaders() 
       });
   }
