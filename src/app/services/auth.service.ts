@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, tap, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { CONFIG } from '../config';
 
@@ -11,6 +11,9 @@ export class AuthService {
   private baseUrl = `${CONFIG.apiBaseUrl}/api/auth`;
   private uploadUrl = `${CONFIG.apiBaseUrl}/api/uploads`;
 
+  private tokenSubject = new BehaviorSubject<string | null>(null); // Access Token
+  private refreshToken: string | null = null; // Refresh Token
+
   constructor(private http: HttpClient) {}
 
   // Sign up a new user
@@ -20,7 +23,14 @@ export class AuthService {
 
   // Login the user
   login(credentials: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login`, credentials);
+    return this.http.post(`${this.baseUrl}/login`, credentials).pipe(
+      tap((response: any) => {
+        this.tokenSubject.next(response.token);
+        this.refreshToken = response.refreshToken;
+        localStorage.setItem('accessToken', response.token);
+        localStorage.setItem('refreshToken', response.refreshToken);
+      })
+    );
   }
 
   // Get the profile of the logged-in user
