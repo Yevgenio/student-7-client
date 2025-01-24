@@ -29,7 +29,7 @@ export class DealFormComponent implements OnInit {
       name: ['', Validators.required],
       description: [''],
       category: [''],
-      stock: [''],
+      stock: -1,
       startsAt: [''],
       endsAt: [''],
       imagePath: [''],
