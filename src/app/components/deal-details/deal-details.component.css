@@ -63,17 +63,34 @@
   max-width: 100%;
 }
 
+.description {
+  white-space: pre-wrap; /* Preserve newlines and wrap text */
+  word-wrap: break-word; /* Break long words if needed */
+  font-size: 16px; /* Adjust font size as needed */
+  line-height: 1.5; /* Adjust line height for readability */
+  color: #333; /* Optional: Text color */
+}
+
+.barcode-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+}
+
+.barcode-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 h1 {
   font-size: 36px;
   margin-bottom: 20px;
 }
 
-.price {
-  font-size: 28px;
-  color: #e67e22;
-  font-weight: bold;
-  margin-top: 15px;
-}
 
 button {
   background-color: #2ecc71;

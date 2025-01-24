@@ -6,8 +6,10 @@
       <div class="zoomed-image" #zoomedImage [style.background-image]="'url(' + deal.imagePath + ')'"></div>
     </div>
     <div class="deal-info">
-      <p>{{ deal.description }}</p>
-      <img [src]="deal.barcodePath" alt="{{ deal.name }}" class="deal-barcode" />
+      <div class="description">{{ deal.description }}</div>
+      <div class="barcode-container">
+        <img [src]="deal.barcodePath" alt="{{ deal.name }}" class="deal-barcode" />
+      </div>
       <!-- <button>Add to Cart</button> -->
     </div>
   </div>
