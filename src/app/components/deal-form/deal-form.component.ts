@@ -42,7 +42,7 @@ export class DealFormComponent implements OnInit {
       this.isEditMode = true;
       // Fetch the deal details and populate the form
       this.dealService.getDealById(this.dealId).subscribe(deal => {
-        deal.stock = deal.stock || -1;
+        deal.stock = deal.stock == null ? -1 : deal.stock;
         this.dealForm.patchValue(deal);
       });
     }
