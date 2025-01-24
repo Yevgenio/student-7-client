@@ -12,7 +12,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent {
+  username: string | null = null;
+
   constructor(public authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.authService.ensureValidToken().subscribe((token) => {
+      if (token) {
+        this.username = this.authService.getUsername();
+        console.log('Token is valid and refreshed if needed:', token);
+      } else {
+        console.log('User is logged out or no valid token exists.');
+      }
+    });
+  }
+
+  // getUserName(): string {
+  //   return this.authService.getUsername() ?? ''; 
+  // }
 
   logout(): void {
     this.authService.logout();

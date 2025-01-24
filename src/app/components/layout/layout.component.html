@@ -14,7 +14,7 @@
       </div>
       <!-- Left-aligned buttons -->
       <div class="left-links">
-        <a *ngIf="authService.isLoggedIn()" routerLink="/settings">My Profile</a>
+        <a *ngIf="authService.isLoggedIn()" routerLink="/settings">{{ username }}</a>
         <a *ngIf="!authService.isLoggedIn()" routerLink="/login">Login</a>
         <a *ngIf="!authService.isLoggedIn()" routerLink="/signup">Sign Up!</a>
         <a *ngIf="authService.isLoggedIn()" routerLink (click)="logout()">Logout</a>
