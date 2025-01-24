@@ -64,7 +64,8 @@ export class ChatFormComponent implements OnInit {
   onFileSelect(event: Event, field: string): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      this.selectedFiles[field] = file; // Store the file in the selectedFiles object
+      this.chatForm.patchValue({ [field]: file });
+      this.chatForm.get(field)?.updateValueAndValidity();
     }
   }
 

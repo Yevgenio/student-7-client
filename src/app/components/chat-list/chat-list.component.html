@@ -4,11 +4,11 @@
  <div class="chat-list">
   <div *ngFor="let chat of chats" class="chat-item">
     <a [routerLink]="['/chats/id', chat._id]" class="chat-link">
-      <h2>{{ chat.name }}</h2>
       <div
         class="chat-image"
         [ngStyle]="{ 'background-image': 'url(' + chat.imagePath + ')' }"
       ></div>
+      <h2>{{ chat.name }}</h2>
       <p>{{ chat.description }}</p>
     </a>
     <!-- Hover Buttons -->
