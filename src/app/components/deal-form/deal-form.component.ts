@@ -16,6 +16,8 @@ export class DealFormComponent implements OnInit {
   selectedFiles: { [key: string]: File } = {};
   isEditMode = false; // To track whether we're editing or creating a deal
   dealId: string | null = null; // To store the ID of the deal being edited
+  existingBarcodePath: string | undefined;
+  existingImagePath: string | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -29,21 +31,32 @@ export class DealFormComponent implements OnInit {
       name: ['', Validators.required],
       description: [''],
       category: [''],
-      stock: -1,
+      stock: [null],
       startsAt: [''],
       endsAt: [''],
       imagePath: [''],
       barcodePath: [''],
     });
-
-    // Check if we're in edit mode (i.e., if a deal ID is in the route)
-    this.dealId = this.route.snapshot.paramMap.get('id');
-    if (this.dealId) {
+  
+    const dealId = this.route.snapshot.paramMap.get('id');
+    if (dealId) {
       this.isEditMode = true;
-      // Fetch the deal details and populate the form
-      this.dealService.getDealById(this.dealId).subscribe(deal => {
-        deal.stock = deal.stock == null ? -1 : deal.stock;
-        this.dealForm.patchValue(deal);
+      this.dealId = dealId;
+  
+      // Fetch the existing deal data
+      this.dealService.getDealById(dealId).subscribe(deal => {
+        this.dealForm.patchValue({
+          name: deal.name,
+          description: deal.description,
+          category: deal.category,
+          stock: deal.stock,
+          startsAt: deal.startsAt ? new Date(deal.startsAt).toISOString().substring(0, 10) : '',
+          endsAt: deal.endsAt ? new Date(deal.endsAt).toISOString().substring(0, 10) : '',
+        });
+  
+        // Store existing image and barcode paths
+        this.existingImagePath = deal.imagePath;
+        this.existingBarcodePath = deal.barcodePath;
       });
     }
   }
@@ -59,15 +72,36 @@ export class DealFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.dealForm.valid) {
+      const formData = new FormData();
+  
+      // Append form fields
+      Object.keys(this.dealForm.value).forEach(key => {
+        formData.append(key, this.dealForm.value[key]);
+      });
+  
+      // Use existing image and barcode paths if new files are not uploaded
+      if (!this.selectedFiles['imagePath']) {
+        formData.append('imagePath', this.existingImagePath || '');
+      }
+      if (!this.selectedFiles['barcodePath']) {
+        formData.append('barcodePath', this.existingBarcodePath || '');
+      }
+  
+      // Append new files, if any
+      Object.keys(this.selectedFiles).forEach(key => {
+        formData.append(key, this.selectedFiles[key]);
+      });
+  
       if (this.isEditMode) {
-        // Update the existing deal
-        this.dealService.updateDeal(this.dealId!, this.dealForm.value).subscribe(() => {
-          this.router.navigate(['/deals']);
-        });
-      } else {
-        // Create a new deal
-        this.dealService.createDeal(this.dealForm.value).subscribe(() => {
-          this.router.navigate(['/deals']);
+        // Update the deal
+        this.dealService.updateDeal(this.dealId!, formData).subscribe({
+          next: () => {
+            alert('Deal updated successfully!');
+            this.router.navigate(['/deals']);
+          },
+          error: err => {
+            console.error('Error updating deal:', err);
+          },
         });
       }
     }
