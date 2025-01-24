@@ -5,13 +5,12 @@
   <div *ngFor="let deal of deals" class="deal-item">
     <!-- Wrap the entire deal-item content (excluding the button) in a link -->
     <a [routerLink]="['/deals/id', deal._id]" class="deal-link">
-      <h2>{{ deal.name }}</h2>
       <div
         class="deal-image"
         [ngStyle]="{ 'background-image': 'url(' + deal.imagePath + ')' }"
       ></div>
+      <h2>{{ deal.name }}</h2>
       <p>{{ deal.description }}</p>
-      <p class="price">Price: ₪{{ deal.price }}</p>
     </a>
     <button>Add to Cart</button>
   </div>

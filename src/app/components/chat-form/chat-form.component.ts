@@ -74,6 +74,7 @@ export class ChatFormComponent implements OnInit {
       if (this.isEditMode) {
         // Update the existing chat
         this.chatService.updateChat(this.chatId!, this.chatForm.value).subscribe(() => {
+          console.log(this.chatForm.value);
           this.router.navigate(['/chats']);
         });
       } else {
