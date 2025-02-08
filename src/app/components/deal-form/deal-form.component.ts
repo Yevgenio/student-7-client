@@ -5,7 +5,7 @@ import { DealService } from '../../services/deal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-deal-form',
+  selector: 'app-memo-form',
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './deal-form.component.html',

@@ -6,7 +6,7 @@ import { Deal } from '../../models/deal.model';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-deal-list',
+  selector: 'app-memo-list',
   standalone: true,
   imports: [RouterModule, CommonModule],
   templateUrl: './deal-list.component.html',

@@ -21,6 +21,9 @@ import { UserSettingsComponent } from './components/user-settings/user-settings.
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 
 import { ErrorMessageComponent } from './components/error-message/error-message.component';
+import { MemoListComponent } from './components/memo-list/memo-list.component';
+import { MemoDetailsComponent } from './components/memo-details/memo-details.component';
+import { MemoFormComponent } from './components/memo-form/memo-form.component';
 
 // export const routes: Routes = [  
 //     { path: '', component: HomeComponent },
@@ -48,6 +51,11 @@ export const routes: Routes = [
       { path: 'chats/id/:id', component: ChatDetailsComponent },
       { path: 'chats/add', component: ChatFormComponent, canActivate: [AdminGuard] },
       { path: 'chats/edit/:id', component: ChatFormComponent }, // Edit existing chat
+
+      { path: 'memos', component: MemoListComponent },
+      { path: 'memos/id/:id', component: MemoDetailsComponent },
+      { path: 'memos/add', component: MemoFormComponent, canActivate: [AdminGuard] },
+      { path: 'memos/edit/:id', component: MemoFormComponent }, // Edit existing deal
 
       { path: 'signup', component: UserSignupComponent },
       { path: 'login', component: UserLoginComponent },

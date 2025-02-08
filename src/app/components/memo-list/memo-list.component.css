@@ -1,0 +1,102 @@
+.memo-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.memo-item {
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  background-color: #fff;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.hover-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.memo-item:hover .hover-buttons {
+  display: flex;
+}
+
+.memo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.memo-item h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.memo-item {
+  margin-bottom: 20px;
+}
+
+.memo-link {
+  display: block;
+  color: inherit; /* Ensure the text color inherits from the parent */
+  text-decoration: none; /* Remove default link styling */
+}
+
+.memo-image {
+  width: 100%; /* This will fill the width of the container */
+  padding-top: 100%; /* This ensures the div is a square by making height equal to width */
+  background-size: cover; /* Ensures the image fills the div and crops the longer side */
+  background-position: center; /* Keeps the image centered */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+  border-radius: 5px; /* Optional: Rounded corners */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Adds a shadow for depth */
+}
+
+.memo-item p {
+  color: #666;
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.memo-item .price {
+  font-weight: bold;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  color: #4CAF50;
+}
+
+button {
+  position: relative; /* Required for pseudo-element positioning */
+  padding: 10px 10px 7px 9px;
+  background-color: white; /* White background */
+  color: hsla(188, 63%, 20%, 0.9); /* Button text color */
+  border: 1px solid #ddd;
+  border-radius: 50px; /* Rounded corners for cloud effect */
+  cursor: pointer;
+  font-size: 1em;
+  overflow: hidden; /* Ensures gradient doesn't overflow */
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 0.1s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+button:hover {
+  background-color: whitesmoke;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+  /* transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); */
+}
+
+button svg {
+  /* fill: currentColor;  */
+  stroke: currentColor; /* Inherit the text color of the button for outlines */
+  width: 20px; /* Optional: Adjust size */
+  height: 20px;
+}
